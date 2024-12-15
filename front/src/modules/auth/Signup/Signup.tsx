@@ -9,6 +9,7 @@ import Card from "../common/Card";
 import Container from "../common/Container";
 
 import { Controller, useForm } from "react-hook-form";
+import { routes } from "../../common/routes";
 
 function Signup() {
   const {
@@ -173,7 +174,11 @@ function Signup() {
           <Typography sx={{ textAlign: "center" }}>
             I have an account?{" "}
             <span>
-              <Link href="/login" variant="body2" sx={{ alignSelf: "center" }}>
+              <Link
+                href={routes.login}
+                variant="body2"
+                sx={{ alignSelf: "center" }}
+              >
                 Sign in
               </Link>
             </span>

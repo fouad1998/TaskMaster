@@ -1,7 +1,8 @@
 import BackArrowIcon from "@mui/icons-material/ArrowBack";
+import DarkLight from "./DarkLight";
+
 import { Box, IconButton, Stack } from "@mui/material";
 import { Outlet } from "react-router";
-import DarkLight from "./DarkLight";
 
 function PageLayout() {
   return (
@@ -15,7 +16,7 @@ function PageLayout() {
         <IconButton>
           <BackArrowIcon />
         </IconButton>
-        <Box component="img" src="logo.png" width={40} />
+        <Box component="img" src="logo.png" width={60} />
         <span>
           <DarkLight />
         </span>

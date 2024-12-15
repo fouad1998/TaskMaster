@@ -1,0 +1,6 @@
+{
+   "python.analysis.autoImportCompletions": true,
+   "python.autoComplete.extraPaths": [
+      "./venv/lib/python3.12/site-packages" // Adjust Python version as needed
+   ]
+}

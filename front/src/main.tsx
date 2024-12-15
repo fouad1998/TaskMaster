@@ -9,14 +9,17 @@ import AppTheme from "./modules/common/AppTheme";
 import { CssBaseline, StyledEngineProvider } from "@mui/material";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <StyledEngineProvider injectFirst>
       <AppTheme>
         <CssBaseline enableColorScheme />
-        <MemoryRouter>
+        <MemoryRouter
+        // basename="/taskmaster"
+        // initialEntries={["/taskmaster/login"]}
+        >
           <App />
         </MemoryRouter>
       </AppTheme>

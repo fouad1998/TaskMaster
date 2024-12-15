@@ -11,8 +11,8 @@ class Task(models.Model):
     comlexity = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     duration = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(60*8)])
     completed = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, auto_created=True)
+    updated_at = models.DateTimeField(auto_now=True, auto_created=True)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     def __str__(self):

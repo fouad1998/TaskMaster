@@ -7,6 +7,7 @@ import { alpha, Components, Theme } from "@mui/material/styles";
 import { SvgIconProps } from "@mui/material/SvgIcon";
 import { tabClasses } from "@mui/material/Tab";
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { brand, gray } from "../themePrimitives";
 
 export const navigationCustomizations: Components<Theme> = {
@@ -121,6 +122,7 @@ export const navigationCustomizations: Components<Theme> = {
   MuiLink: {
     defaultProps: {
       underline: "none",
+      component: (props) => <Link {...props} to={props.href} />,
     },
     styleOverrides: {
       root: ({ theme }) => ({

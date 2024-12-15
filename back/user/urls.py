@@ -1,8 +1,8 @@
-from django.urls import include, path
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 
-from .views import user_detail_view
+from .views import user_detail_view, user_list_view
 
 urlpatterns = [
-  path('<int:pk>/', user_detail_view)
+  path('', user_detail_view),
+  path('list/', user_list_view),
 ]

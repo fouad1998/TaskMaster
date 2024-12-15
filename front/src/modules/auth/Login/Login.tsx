@@ -11,6 +11,7 @@ import Container from "../common/Container";
 import ForgotPassword from "./ForgotPassword";
 
 import { Controller, useForm } from "react-hook-form";
+import { routes } from "../../common/routes";
 
 function Login() {
   const [open, setOpen] = React.useState(false);
@@ -138,7 +139,11 @@ function Login() {
           <Typography sx={{ textAlign: "center" }}>
             Don&apos;t have an account?{" "}
             <span>
-              <Link href="/signup" variant="body2" sx={{ alignSelf: "center" }}>
+              <Link
+                href={routes.register}
+                variant="body2"
+                sx={{ alignSelf: "center" }}
+              >
                 Sign up
               </Link>
             </span>
