@@ -11,16 +11,19 @@ import CardContainer from "../../common/CardContainer";
 import ForgotPassword from "./ForgotPassword";
 
 import { Controller, useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
 import { routes } from "../../common/routes";
+import { useAuth } from "../AuthProvider";
 
 function Login() {
+  const auth = useAuth();
   const [open, setOpen] = React.useState(false);
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm({
-    defaultValues: {
+    values: {
       email: "",
       password: "",
     },
@@ -33,6 +36,10 @@ function Login() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  if (auth.user) {
+    return <Navigate to={routes.home} replace />;
+  }
 
   return (
     <CardContainer direction="column" justifyContent="space-between">
@@ -47,7 +54,7 @@ function Login() {
         <Box
           component="form"
           onSubmit={handleSubmit(function (data) {
-            console.log(data);
+            auth.login(data);
           })}
           noValidate
           sx={{
@@ -58,14 +65,14 @@ function Login() {
           }}
         >
           <FormControl>
-            <FormLabel htmlFor="email">Email</FormLabel>
+            <FormLabel htmlFor="email">Username</FormLabel>
             <Controller
               name="email"
               control={control}
               rules={{
                 validate(value) {
-                  if (!value || !/\S+@\S+\.\S+/.test(value)) {
-                    return "Please enter a valid email address.";
+                  if (!value) {
+                    return "Please enter a valid username.";
                   }
                 },
               }}
@@ -73,8 +80,8 @@ function Login() {
                 <TextField
                   id="email"
                   type="email"
-                  placeholder="your@email.com"
-                  autoComplete="email"
+                  placeholder="johndoe"
+                  autoComplete="username"
                   variant="outlined"
                   color={errors["email"] ? "error" : "primary"}
                   error={Boolean(errors["email"])}

@@ -22,8 +22,6 @@ function Tasks() {
     },
   });
 
-  console.log({ tasks });
-
   return (
     <Layout>
       <Stack gap={isLoading ? 3 : 1}>

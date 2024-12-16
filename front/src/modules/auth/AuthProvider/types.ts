@@ -14,3 +14,7 @@ export type AuthContext = {
   login(cred: { email: string; password: string }): void;
   logout(): void;
 };
+
+export type LoginResponse = {
+  token: string;
+};

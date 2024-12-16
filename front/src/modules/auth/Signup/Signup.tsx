@@ -7,23 +7,52 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 import { Controller, useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import { Navigate } from "react-router-dom";
 import Card from "../../common/Card";
 import CardContainer from "../../common/CardContainer";
+import { fetchWrap } from "../../common/fetch";
 import { routes } from "../../common/routes";
+import { useAuth } from "../AuthProvider";
+import type { SignupForm } from "./types";
 
 function Signup() {
+  const auth = useAuth();
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm({
-    defaultValues: {
+    values: {
+      username: "",
       firstname: "",
       lastname: "",
       email: "",
       password: "",
     },
   });
+  const create = useMutation({
+    mutationFn(data: SignupForm) {
+      return fetchWrap("user/register/", {
+        method: "POST",
+        body: {
+          ...data,
+          first_name: data.firstname,
+          last_name: data.lastname,
+        },
+      });
+    },
+    onSuccess(_, variables) {
+      auth.login({
+        email: variables.username,
+        password: variables.password,
+      });
+    },
+  });
+
+  if (auth.user) {
+    return <Navigate to={routes.home} replace />;
+  }
 
   return (
     <CardContainer direction="column" justifyContent="space-between">
@@ -38,7 +67,7 @@ function Signup() {
         <Box
           component="form"
           onSubmit={handleSubmit(function (data) {
-            console.log(data);
+            create.mutateAsync(data);
           })}
           noValidate
           sx={{
@@ -48,6 +77,36 @@ function Signup() {
             gap: 2,
           }}
         >
+          <FormControl>
+            <FormLabel htmlFor="username">Username</FormLabel>
+            <Controller
+              name="username"
+              control={control}
+              rules={{
+                validate(value) {
+                  if (!value || value.length < 6) {
+                    return "Please enter a valid username.";
+                  }
+                },
+              }}
+              render={({ field }) => (
+                <TextField
+                  id="username"
+                  type="text"
+                  placeholder="johndoe"
+                  autoComplete="username"
+                  variant="outlined"
+                  color={errors["username"] ? "error" : "primary"}
+                  error={Boolean(errors["username"])}
+                  helperText={errors["username"]?.message}
+                  autoFocus
+                  required
+                  fullWidth
+                  {...field}
+                />
+              )}
+            />
+          </FormControl>
           <FormControl>
             <FormLabel htmlFor="firstname">Firstname</FormLabel>
             <Controller

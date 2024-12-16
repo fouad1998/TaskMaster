@@ -1,7 +1,9 @@
 import { Delete, Done, Edit } from "@mui/icons-material";
 import {
   Alert,
+  Button,
   IconButton,
+  Link,
   Paper,
   Stack,
   Table,
@@ -12,9 +14,10 @@ import {
   TableRow,
 } from "@mui/material";
 import { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { fetchWrap } from "../../common/fetch";
+import { routes } from "../../common/routes";
 import { Tasks } from "../types";
 
 const headers = ["ID", "Title", "Description", "Status", "XP", "Actions"];
@@ -24,15 +27,12 @@ type Props = {
 };
 function TasksTable({ tasks }: Props) {
   const navigate = useNavigate();
+  const client = useQueryClient();
 
   const [alert, setAlert] = useState<{
     message: string;
     error: boolean;
   } | null>(null);
-
-  function onEdit(id: number) {
-    navigate(`/tasks/${id}`);
-  }
 
   const deleteTask = useMutation({
     async mutationFn(id: number) {
@@ -42,6 +42,7 @@ function TasksTable({ tasks }: Props) {
     },
     onSuccess(_, id) {
       setAlert({ message: `Task ${id} was deleted`, error: false });
+      client.invalidateQueries("tasks");
     },
     onError(_, id) {
       setAlert({ message: `Task ${id} was not deleted`, error: true });
@@ -51,18 +52,41 @@ function TasksTable({ tasks }: Props) {
   const completeTask = useMutation({
     async mutationFn(id: number) {
       return fetchWrap(`tasks/${id}/complete/`, {
-        method: "POST",
+        method: "PATCH",
       });
     },
     onSuccess(_, id) {
       setAlert({ message: `Task ${id} was completed`, error: false });
+      client.invalidateQueries("tasks");
+      client.invalidateQueries(["user"]);
     },
     onError(_, id) {
       setAlert({ message: `Task ${id} was not completed`, error: true });
     },
   });
 
+  function onEdit(id: number) {
+    navigate(`/tasks/${id}`);
+  }
+
   const disableActions = completeTask.isLoading || deleteTask.isLoading;
+
+  if (!tasks.length) {
+    return (
+      <Stack gap={2} py={3} alignItems="center">
+        <Alert severity="info" sx={{ width: "100%" }}>
+          Empty list of tasks
+        </Alert>
+        <Button
+          variant="contained"
+          LinkComponent={Link}
+          href={routes.createTask}
+        >
+          Create new task
+        </Button>
+      </Stack>
+    );
+  }
 
   return (
     <Stack gap={1}>

@@ -2,8 +2,9 @@ import { CircularProgress, Stack } from "@mui/material";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { fetchWrap } from "../../common/fetch";
+import { setToken } from "../common/token";
 import { AuthContext } from "./const";
-import { User } from "./types";
+import { LoginResponse, User } from "./types";
 
 type Props = {
   children: React.ReactNode;
@@ -15,15 +16,16 @@ function AuthProvider({ children }: Props) {
   const login = useMutation({
     async mutationFn({ email, password }: LoginFn) {
       return fetchWrap("auth/", {
-        body: { email, password },
+        body: { username: email, password },
       });
     },
-    onSuccess(data, variables, context) {
-      console.log("onSuccess", data, variables, context);
+    onSuccess(data: LoginResponse) {
+      setToken(data.token);
+      getUser.refetch();
     },
   });
 
-  const getUser = useQuery({
+  const getUser = useQuery(["user"], {
     queryFn() {
       return fetchWrap("user/");
     },
@@ -34,7 +36,7 @@ function AuthProvider({ children }: Props) {
 
   console.log({ user });
 
-  if (getUser.isLoading || !user) {
+  if (getUser.isLoading) {
     return (
       <Stack alignItems="center" justifyContent="center" py={20} minWidth={400}>
         <CircularProgress size={70} />

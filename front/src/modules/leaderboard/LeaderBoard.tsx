@@ -1,3 +1,6 @@
+import ErrorLoading from "../common/ErrorLoading";
+import Stars from "./Stars";
+
 import {
   Avatar,
   Box,
@@ -14,10 +17,8 @@ import {
 import { useQuery } from "react-query";
 import { useAuth } from "../auth/AuthProvider";
 import { User } from "../auth/AuthProvider/types";
-import ErrorLoading from "../common/ErrorLoading";
 import { fetchWrap } from "../common/fetch";
 import { routes } from "../common/routes";
-import Stars from "./Stars";
 import { getOrdinalPosition } from "./utils";
 
 function LeaderBoard() {
@@ -35,7 +36,7 @@ function LeaderBoard() {
       <Stack gap={2}>
         <Stars />
         <Typography variant="h3" align="center" fontWeight={600}>
-          LEADERBOARD
+          SILVER LEAGUE
         </Typography>
 
         {isError ? (
@@ -45,7 +46,7 @@ function LeaderBoard() {
         ) : (
           <List component="nav">
             {users
-              ?.sort((a, b) => a.xp - b.xp)
+              ?.sort((a, b) => b.xp - a.xp)
               .map((usr, index) => (
                 <ListItemButton
                   key={usr.id}

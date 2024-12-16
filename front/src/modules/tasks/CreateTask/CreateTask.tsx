@@ -10,7 +10,7 @@ function CreateTask() {
   const navigate = useNavigate();
   const create = useMutation({
     mutationFn(data: TaskForm) {
-      return fetchWrap("tasks/dd", {
+      return fetchWrap("tasks/", {
         method: "POST",
         body: convertFormTask(data),
       });

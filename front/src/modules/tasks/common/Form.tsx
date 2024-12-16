@@ -29,7 +29,6 @@ function Form({
   disabled,
   onSubmit,
 }: Props) {
-  console.log({ initValues });
   const {
     control,
     formState: { errors },

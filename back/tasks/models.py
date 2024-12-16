@@ -21,5 +21,5 @@ class Task(models.Model):
     @property
     def points(self):
         complexity_points =  float (self.complexity) * 0.5
-        duration_points  =  float(self.duration) * 0.2
+        duration_points  =  float(self.duration) * 0.02
         return int (complexity_points + duration_points)
