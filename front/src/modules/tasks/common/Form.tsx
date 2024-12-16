@@ -43,6 +43,11 @@ function Form({
       complexity: 4,
     },
   });
+  const defaultValue = initValues?.duration || {
+    hours: 1,
+    minutes: 0,
+    seconds: 0,
+  };
 
   return (
     <CardContainer direction="column" justifyContent="space-between">
@@ -131,7 +136,7 @@ function Form({
             <FormLabel htmlFor="duration">Duration</FormLabel>
             <DurationPicker
               maxHours={7}
-              initialDuration={{ hours: 1, minutes: 2, seconds: 3 }}
+              initialDuration={defaultValue}
               onChange={(value) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 setValue("duration", value as any);
