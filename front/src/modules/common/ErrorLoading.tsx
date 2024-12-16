@@ -14,7 +14,9 @@ function ErrorLoading({ refetch }: Props) {
         Something went wrong. Please try again later.
       </Typography>
 
-      <Button onClick={refetch}>Retry</Button>
+      <Button variant="outlined" onClick={refetch}>
+        Retry
+      </Button>
     </Stack>
   );
 }

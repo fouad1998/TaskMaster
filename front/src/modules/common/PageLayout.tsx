@@ -9,7 +9,7 @@ function PageLayout() {
     <Box
       sx={{
         p: 2,
-        minWidth: 520,
+        minWidth: 600,
       }}
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center">

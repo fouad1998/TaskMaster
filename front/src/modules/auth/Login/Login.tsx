@@ -6,8 +6,8 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React from "react";
-import Card from "../common/Card";
-import Container from "../common/Container";
+import Card from "../../common/Card";
+import CardContainer from "../../common/CardContainer";
 import ForgotPassword from "./ForgotPassword";
 
 import { Controller, useForm } from "react-hook-form";
@@ -35,7 +35,7 @@ function Login() {
   };
 
   return (
-    <Container direction="column" justifyContent="space-between">
+    <CardContainer direction="column" justifyContent="space-between">
       <Card variant="outlined">
         <Typography
           component="h1"
@@ -150,7 +150,7 @@ function Login() {
           </Typography>
         </Box>
       </Card>
-    </Container>
+    </CardContainer>
   );
 }
 

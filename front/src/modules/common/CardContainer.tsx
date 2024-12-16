@@ -4,7 +4,7 @@ import React from "react";
 type Props = StackProps & {
   children: React.ReactNode;
 };
-function Container({ children, ...props }: Props) {
+function CardContainer({ children, ...props }: Props) {
   return (
     <Stack
       {...props}
@@ -32,4 +32,4 @@ function Container({ children, ...props }: Props) {
   );
 }
 
-export default Container;
+export default CardContainer;

@@ -5,10 +5,10 @@ import FormLabel from "@mui/material/FormLabel";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Card from "../common/Card";
-import Container from "../common/Container";
 
 import { Controller, useForm } from "react-hook-form";
+import Card from "../../common/Card";
+import CardContainer from "../../common/CardContainer";
 import { routes } from "../../common/routes";
 
 function Signup() {
@@ -26,7 +26,7 @@ function Signup() {
   });
 
   return (
-    <Container direction="column" justifyContent="space-between">
+    <CardContainer direction="column" justifyContent="space-between">
       <Card variant="outlined">
         <Typography
           component="h1"
@@ -185,7 +185,7 @@ function Signup() {
           </Typography>
         </Box>
       </Card>
-    </Container>
+    </CardContainer>
   );
 }
 

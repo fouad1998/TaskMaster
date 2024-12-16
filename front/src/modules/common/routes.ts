@@ -4,4 +4,6 @@ export const routes = {
   register: "/register",
   profile: "/profile",
   tasks: "/tasks",
+  createTask: "/tasks/create",
+  modifyTask: "/tasks/:id",
 };
